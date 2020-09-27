@@ -43,7 +43,7 @@ CREATE TABLE Utiliza (
     cantidad    NUMBER(10) NOT NULL,
     idservicio  VARCHAR(5) NOT NULL,
     idproducto  VARCHAR(5) NOT NULL
-);
+);.
 
 /*Pk's*/
 
