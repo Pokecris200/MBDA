@@ -11,28 +11,28 @@ CREATE TABLE Telefono (
 CREATE TABLE Factura (
     numero      NUMBER(5) NOT NULL,
     fecha       DATE NOT NULL,
-    total       NUMBER(12) NOT NULL,
+    total       NUMBER(10,2) NOT NULL,
     nid         NUMBER(15) NOT NULL
 );
 CREATE TABLE LineaFactura (
     cantidad    NUMBER(10) NOT NULL,
-    precioventa NUMBER(12) NOT NULL,
+    precioventa NUMBER(10,2) NOT NULL,
     numero      NUMBER(5) NOT NULL,
     codigo      VARCHAR(5) NOT NULL
 );
 CREATE TABLE Bien (
     codigo      VARCHAR(5) NOT NULL,
     nombre      VARCHAR(20) NOT NULL,
-    precioventa NUMBER(12) NOT NULL
+    precioventa NUMBER(10,2) NOT NULL
 );
 CREATE TABLE Servicio (
-    manodeobra  NUMBER(12) NOT NULL,
-    costo       NUMBER(12) NOT NULL,
+    manodeobra  NUMBER(10,2) NOT NULL,
+    costo       NUMBER(10,2) NOT NULL,
     codigo      VARCHAR(5) NOT NULL
 );
 CREATE TABLE Servicio (
     existencias NUMBER(4) NOT NULL,
-    preciocompra NUMBER(12) NOT NULL,
+    preciocompra NUMBER(10,2) NOT NULL,
     codigo      VARCHAR(5) NOT NULL
 );
 CREATE TABLE Puedereemplazar (
