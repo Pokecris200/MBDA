@@ -85,3 +85,45 @@ ALTER TABLE LineaFactura ADD CONSTRAINT ck_LineaFactura_moneda CHECK((preciovent
 ALTER TABLE Producto ADD CONSTRAINT ck_Producto_moneda CHECK((preciocompra AS NUMERIC(8))-preciocompra = 0.00 OR (preciocompra AS NUMERIC(8))-preciocompra = 0.50 );
 ALTER TABLE Servicio ADD CONSTRAINT ck_Servicio_moneda_1 CHECK((manodeobra AS NUMERIC(8))-manodeobra = 0.00 OR (manodeobra AS NUMERIC(8))-manodeobra = 0.50 );
 ALTER TABLE Servicio ADD CONSTRAINT ck_Servicio_moneda_2 CHECK((costo AS NUMERIC(8))-costo = 0.00 OR (costo AS NUMERIC(8))-costo = 0.50 );
+                                                                                               
+/*Triggers*/
+CREATE OR REPLACE TRIGGER Eliminar_Factura
+BEFORE DELETE ON Bien
+BEGIN
+    IF (EXISTS(SELECT *
+                FROM Servicio
+                JOIN Bien ON Bien.codigo = Servicio.codigo) 
+        OR EXISTS(SELECT *
+                  FROM Factura
+                  JOIN LineaFactura ON Factura.numero = LineaFactura.numero
+                  JOIN Bien ON LineaFactura.codigo = Bien.codigo))THEN
+    RAISE 'No se puede borrar el bien ';
+    END IF;
+END;
+
+CREATE OR REPLACE TRIGGER Nuevo_Codigo
+AFTER INSERT ON Bien
+BEGIN
+    IF new.codigo = NULL THEN
+        new.codigo := SUBSTR(new.nombre,0,5)
+    END IF;
+END;
+
+
+
+CREATE OR REPLACE TRIGGER Eliminar_Cliente
+BEFORE DELETE ON Cliente
+BEGIN
+    IF(EXISTS(SELECT *
+              FROM Factura
+              JOIN Cliente ON Cliente.nid = Factura.nid))THEN
+    RAISE 'No se puede borrar el cliente ';
+    END IF;
+END;
+
+CREATE OR REPLACE TRIGGER Nuevo_Correo
+AFTER INSERT ON Bien
+BEGIN
+    IF new.correo = NULL THEN
+        new.correo := TO_CHAR(new.nid)||'@vendemmos.com.co'
+END;
