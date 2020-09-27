@@ -79,5 +79,9 @@ ALTER TABLE Utiliza
 
 /*Restricciones*/
 
-ALTER TABLE  ADD CONSTRAINT CHECK
-
+ALTER TABLE Bien ADD CONSTRAINT ck_Bien_moneda CHECK((precioventa AS NUMERIC(8))-precioventa = 0.00 OR (precioventa AS NUMERIC(8))-precioventa = 0.50 );
+ALTER TABLE Factura ADD CONSTRAINT ck_Factura_moneda CHECK((total AS NUMERIC(8))-total = 0.00 OR (total AS NUMERIC(8))-total = 0.50 );
+ALTER TABLE LineaFactura ADD CONSTRAINT ck_LineaFactura_moneda CHECK((precioventa AS NUMERIC(8))-precioventa = 0.00 OR (precioventa AS NUMERIC(8))-precioventa = 0.50 );
+ALTER TABLE Producto ADD CONSTRAINT ck_Producto_moneda CHECK((preciocompra AS NUMERIC(8))-preciocompra = 0.00 OR (preciocompra AS NUMERIC(8))-preciocompra = 0.50 );
+ALTER TABLE Servicio ADD CONSTRAINT ck_Servicio_moneda_1 CHECK((manodeobra AS NUMERIC(8))-manodeobra = 0.00 OR (manodeobra AS NUMERIC(8))-manodeobra = 0.50 );
+ALTER TABLE Servicio ADD CONSTRAINT ck_Servicio_moneda_2 CHECK((costo AS NUMERIC(8))-costo = 0.00 OR (costo AS NUMERIC(8))-costo = 0.50 );
